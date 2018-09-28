@@ -2,6 +2,22 @@ const graphql = require("graphql");
 const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
 const axios = require("axios");
 
+// order of definitions is important!!
+const CompanyType = new GraphQLObjectType({
+  name: "Company",
+  fields: {
+    id: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    },
+    description: {
+      type: GraphQLString
+    }
+  }
+});
+
 // 2 required properties: name (string) / fields (object) -- all the names of the props the User has
 // schemas - what the data looks like
 const UserType = new GraphQLObjectType({
@@ -15,6 +31,15 @@ const UserType = new GraphQLObjectType({
     },
     age: {
       type: GraphQLInt
+    },
+    company: {
+      type: CompanyType,
+      //parentValue is the user we just found
+      resolve(parentValue, args) {
+        return axios
+          .get(`http://localhost:3000/companies/${parentValue.companyId}`)
+          .then(res => res.data);
+      }
     }
   }
 });
