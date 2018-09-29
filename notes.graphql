@@ -96,3 +96,17 @@ mutation{
 #       Apollo is its own implementation - still in active development and has and will dramatically changed
 
 #   Big diff between the two - Express-GraphQL co-locates the types and resovlers in one GraphQLObjectType whereas Apollo has them in seperate files
+
+
+# ~~~~~~~~~~~~~~~~~~~~~
+#    Apollo Client Setup
+# ~~~~~~~~~~~~~~~~~~~~~
+
+#   Broken into two parts
+#     Apollo Store - what is communicating with the GraphQL server
+#         - a client-side store of data/repository of all data coming from the server
+#         - agnostic of what the client side tech is
+#         - don't really have to mess with it
+#     Apollo Provider - provider of data to our react app
+#         - takes data from the store and injects it into the app
+
