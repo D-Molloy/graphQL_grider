@@ -1,0 +1,78 @@
+# ~~~~~~~~~~~~~~~~~~~~~
+#     FRAGEMENTS
+# ~~~~~~~~~~~~~~~~~~~~~
+
+# Old Query
+{
+  apple: company(id: "1") {
+    id
+    name
+    description
+  }
+  google: company(id: "2") {
+    id
+    name
+    description
+  }
+}
+
+# New Query:
+{
+  apple: company(id: "1") {
+    ...companyDetails
+  }
+  google: company(id: "2") {
+    ...companyDetails
+  }
+}
+
+    # Creating the fragment - if we try to add fields not in the Company schema we'll get an error
+fragment companyDetails on Company {
+  id
+  name
+  description
+}
+
+# Output
+{
+  "data": {
+    "apple": {
+      "id": "1",
+      "name": "Apple",
+      "description": "iphone"
+    },
+    "google": {
+      "id": "2",
+      "name": "Google",
+      "description": "search"
+    }
+  }
+}
+
+
+# ~~~~~~~~~~~~~~~~~~~~~
+#     Mutations
+# ~~~~~~~~~~~~~~~~~~~~~
+
+# when we want to Create, Update, Delete data via graphQL
+
+mutation{
+  # specify which mutation and pass args
+  addUser(firstName: "Blair", age: 26){
+    # MUST specify the data you want back - comes from the resolve method
+    id
+    firstName
+    age
+  }
+}
+
+# result
+{
+  "data": {
+    "addUser": {
+      "id": "d1QU~Mb",
+      "firstName": "Blair",
+      "age": 26
+    }
+  }
+}
